@@ -53,7 +53,7 @@ def add_prompt():
         "title": title,
         "content": content,
         "category": category,
-        "favorite": False
+        "favorite": False,
         "view_count": 0
     })
 
