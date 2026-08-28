@@ -3,19 +3,22 @@ prompts = [
         "title": "정하윤 - 디자인 리뷰 회의록 정리 시스템 프롬프트 (v2)",
         "content": "당신은 정하윤입니다. 5년 차 프로덕트 디자이너 출신으로, 현재는 디자인 오퍼레이션 담당자로서 팀 내 디자인 리뷰 회의록 정리를 전담하고 있습니다.\n\n[목표]\n사용자가 제공하는 디자인 리뷰 회의 스크립트를 읽고, 아래 8항목 형식으로 정확하게 요약하는 것이 당신의 유일한 업무입니다.\n\n[전문성 반영]\n디자인 실무 용어(터치 영역, 스테퍼, 반응형, 인터랙션 등)는 풀어서 설명하지 말고 그대로 사용하십시오.\n\n[처리 순서 - 반드시 이 순서를 내부적으로 따르십시오]\n1단계. 입력 확인: 참석자, 리뷰 대상, 스크립트 원문이 모두 존재하는지 먼저 점검하십시오.\n2단계. 발언 분류: 결론이 난 피드백 / 결론이 안 난 피드백 / 발화자 불분명 구간으로 분류하십시오.\n3단계. 항목 작성: 분류를 바탕으로 8항목을 작성하십시오.\n4단계. 자체 검증: 스크립트에 없는 담당자·기한·날짜를 채운 곳이 없는지 확인하고, 있다면 미정으로 수정하십시오.\n\n[안전장치]\n스크립트에 명시되지 않은 정보는 절대 추정해서 채우지 마십시오. 발언자가 불분명한 구간은 화자 불명으로 표시하십시오.",
         "category": "페르소나",
-        "favorite": False
+        "favorite": False,
+        "view_count": 0
     },
     {
         "title": "디자인 리뷰 회의록 8항목 요약 프롬프트",
         "content": "당신은 디자인 리뷰 회의에 참석한 프로덕트 디자이너를 돕는 회의록 정리 도우미입니다.\n아래 회의 스크립트를 읽고, 반드시 아래 8개 항목 형식으로 요약해주세요.\n\n출력 형식 (8항목, 순서대로):\n1. 회의 날짜 / 리뷰 차수\n2. 참석자\n3. 리뷰 대상 (어떤 화면/시안)\n4. 전체 디자인 상태 (승인 / 부분 수정 필요 / 재작업 필요 중 선택)\n5. 피드백별 반영 여부 (반영 확정 / 반려 / 추가 논의 필요로 각각 구분)\n6. Action Items (담당자, 기한 포함)\n7. 이견 / 미합의 지점\n8. 다음 리뷰 일정\n\n규칙:\n- 스크립트에 없는 내용은 지어내지 마세요. 명시되지 않았다면 '미정'이라고 표시하세요.\n- 발언자가 불분명한 구간은 '화자 불명'으로 표시하세요.\n- 결론이 나지 않은 사항은 '추가 논의 필요'로 분류하세요.",
         "category": "텍스트 생성",
-        "favorite": False
+        "favorite": False,
+        "view_count": 0
     },
     {
         "title": "뉴스레터 토픽 추출 프롬프트",
         "content": "다음은 뉴스레터 이메일이야. 이 뉴스레터에서 다루는 토픽(주제)만 bullet point로 추출해줘.\n각 토픽은 한 줄로, 핵심 키워드 위주로 간결하게.\n광고, 구독 안내, 인사말은 무시하고 실제 콘텐츠 주제만 뽑아줘.\n\n이메일 제목: [Subject]\n발신자: [From Name]\n본문: [Body Plain]",
         "category": "자동화",
-        "favorite": False
+        "favorite": False,
+        "view_count": 0
     }
 ]
 
@@ -135,6 +138,7 @@ def show_detail():
         return
 
     p = prompts[index]
+    p["view_count"] += 1
     star = "⭐" if p["favorite"] else "표시 안 됨"
 
     print("─" * 30)
@@ -188,6 +192,14 @@ def show_favorites():
 
     print(f"\n총 {len(favorites)}개의 즐겨찾기")
 
+def show_top_viewed():
+    sorted_prompts = sorted(prompts, key=lambda p: p["view_count"], reverse=True)
+
+    print("\n=== 조회수 Top 목록 ===")
+    for i in range(len(sorted_prompts)):
+        p = sorted_prompts[i]
+        print(f"{i+1}. [{p['category']}] {p['title']} - 조회수: {p['view_count']}")
+
 def show_menu():
     print("\n=== 나만의 프롬프트 관리 ===")
     print("1. 프롬프트 추가")
@@ -197,6 +209,7 @@ def show_menu():
     print("5. 프롬프트 상세 보기")
     print("6. 즐겨찾기 관리")
     print("7. 즐겨찾기 목록")
+    print("8. 조회수 Top 목록")
     print("0. 종료")
 
 def main():
@@ -218,6 +231,8 @@ def main():
             toggle_favorite()
         elif choice == "7":
             show_favorites()
+        elif choice == "8":
+            show_top_viewed()
         elif choice == "0":
             print("프로그램을 종료합니다.")
             break
