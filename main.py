@@ -54,6 +54,7 @@ def add_prompt():
         "content": content,
         "category": category,
         "favorite": False
+        "view_count": 0
     })
 
     print(f"\n'{title}' 프롬프트가 추가되었습니다!")
