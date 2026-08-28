@@ -146,6 +146,48 @@ def show_detail():
     print(p["content"])
     print("─" * 30)
 
+def toggle_favorite():
+    show_list()
+
+    num = input("\n프롬프트 번호 입력: ")
+
+    if not num.isdigit():
+        print("잘못된 번호입니다.")
+        return
+
+    index = int(num) - 1
+
+    if index < 0 or index >= len(prompts):
+        print("잘못된 번호입니다.")
+        return
+
+    p = prompts[index]
+
+    if p["favorite"]:
+        p["favorite"] = False
+        print(f"\n'{p['title']}' 프롬프트를 즐겨찾기에서 해제했습니다!")
+    else:
+        p["favorite"] = True
+        print(f"\n'{p['title']}' 프롬프트를 즐겨찾기에 추가했습니다!")
+
+
+def show_favorites():
+    favorites = []
+    for p in prompts:
+        if p["favorite"]:
+            favorites.append(p)
+
+    print("\n=== 즐겨찾기 목록 ===")
+
+    if len(favorites) == 0:
+        print("즐겨찾기한 프롬프트가 없습니다.")
+        return
+
+    for i in range(len(favorites)):
+        print(f"{i+1}. [{favorites[i]['category']}] {favorites[i]['title']} ⭐")
+
+    print(f"\n총 {len(favorites)}개의 즐겨찾기")
+
 def show_menu():
     print("\n=== 나만의 프롬프트 관리 ===")
     print("1. 프롬프트 추가")
@@ -173,9 +215,9 @@ def main():
         elif choice == "5":
             show_detail()
         elif choice == "6":
-            print("즐겨찾기 관리 기능 (아직 미구현)")
+            toggle_favorite()
         elif choice == "7":
-            print("즐겨찾기 목록 기능 (아직 미구현)")
+            show_favorites()
         elif choice == "0":
             print("프로그램을 종료합니다.")
             break
