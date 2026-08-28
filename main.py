@@ -67,6 +67,38 @@ def show_list():
 
     print(f"\n총 {len(prompts)}개의 프롬프트")
 
+def show_by_category():
+    categories = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
+
+    print("\n=== 카테고리별 조회 ===")
+    for i in range(len(categories)):
+        print(f"{i+1}) {categories[i]}")
+
+    choice = input("선택: ")
+
+    if choice not in ["1", "2", "3", "4", "5", "6"]:
+        print("잘못된 입력입니다.")
+        return
+
+    selected_category = categories[int(choice) - 1]
+
+    print(f"\n[{selected_category}] 카테고리 프롬프트:")
+
+    filtered = []
+    for p in prompts:
+        if p["category"] == selected_category:
+            filtered.append(p)
+
+    if len(filtered) == 0:
+        print("해당 카테고리에 프롬프트가 없습니다.")
+        return
+
+    for i in range(len(filtered)):
+        star = " ⭐" if filtered[i]["favorite"] else ""
+        print(f"{i+1}. {filtered[i]['title']}{star}")
+
+    print(f"\n총 {len(filtered)}개의 프롬프트")
+
 def show_menu():
     print("\n=== 나만의 프롬프트 관리 ===")
     print("1. 프롬프트 추가")
@@ -88,7 +120,7 @@ def main():
         elif choice == "2":
             show_list()
         elif choice == "3":
-            print("카테고리별 조회 기능 (아직 미구현)")
+            show_by_category()
         elif choice == "4":
             print("프롬프트 검색 기능 (아직 미구현)")
         elif choice == "5":
