@@ -10,7 +10,7 @@ GitHub 저장소: https://github.com/9um9n99/prompt-manager
 - Python 3.10 이상 권장
 - 별도 외부 패키지 설치 없음
 - macOS 터미널 또는 VSCode 터미널에서 실행 가능
-- 로컬 확인 환경: `python3 --version` 기준 Python 3.9.6에서도 실행 확인
+- 로컬 확인 환경: Python 3.12.14에서 실행 확인
 
 Git 환경 확인 명령어:
 
