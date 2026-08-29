@@ -71,7 +71,9 @@ prompts = [
 ]
 ```
 
-이 구조를 선택한 이유는 프롬프트가 여러 개이므로 전체 데이터는 리스트로 순서 있게 관리하고, 각 프롬프트의 제목, 내용, 카테고리처럼 이름이 있는 속성은 딕셔너리로 표현하는 것이 읽기 쉽기 때문입니다.
+리스트는 여러 프롬프트를 추가한 순서대로 보관하고 반복 처리하기 쉽다는 장점이 있지만, 각 항목의 의미를 이름으로 바로 알기는 어렵습니다. 딕셔너리는 `title`, `content`, `category`처럼 속성 이름을 붙여 데이터를 읽기 쉽게 관리할 수 있다는 장점이 있지만, 여러 개의 프롬프트를 순서대로 모아 다루는 용도로는 리스트보다 불편합니다.
+
+그래서 이 프로젝트에서는 전체 프롬프트 묶음은 리스트로 관리하고, 각 프롬프트 한 개의 세부 정보는 딕셔너리로 관리하는 리스트 안의 딕셔너리 구조를 사용했습니다.
 
 ## 카테고리 설계
 
@@ -156,6 +158,38 @@ prompts = [
 git log --oneline --graph --all
 ```
 
+## 저장소 업로드 및 원격 확인 증빙
+
+GitHub 원격 저장소 주소는 다음과 같습니다.
+
+- https://github.com/9um9n99/prompt-manager
+
+제출 시에는 저장소가 실제로 GitHub에 업로드되어 있고 로컬 저장소가 원격 저장소와 연결되어 있음을 보여주는 화면을 함께 첨부합니다.
+
+- 증빙 이미지 경로: `docs/screenshots/repository-remote-evidence.png`
+- 아직 이미지 파일을 올리지 않았다면, GitHub 저장소 페이지 또는 아래 명령어 실행 결과가 보이도록 캡처한 뒤 위 경로에 저장합니다.
+
+```bash
+git remote -v
+git branch -vv
+```
+
+## 공개 샘플 저장소 클론 증빙
+
+이 항목은 위의 사용자 본인 저장소 클론과 별개입니다. 공개 샘플 저장소를 직접 클론하고, 클론 출력과 폴더 목록을 함께 캡처해 제출합니다.
+
+- 사용할 공개 샘플 저장소: https://github.com/octocat/Hello-World
+- 증빙 이미지 경로: `docs/screenshots/sample-repo-clone-and-list.png`
+- 아직 이미지 파일을 올리지 않았다면, 아래 명령어의 `git clone` 출력과 `ls -la` 결과가 한 화면에 보이도록 캡처한 뒤 위 경로에 저장합니다.
+
+```bash
+mkdir -p ~/Desktop/codyssey-sample-clone-check
+cd ~/Desktop/codyssey-sample-clone-check
+git clone https://github.com/octocat/Hello-World.git
+cd Hello-World
+ls -la
+```
+
 ## 브랜치 전략
 
 기본 작업 브랜치는 `main`입니다. 기능을 보완할 때는 별도 브랜치를 만든 뒤 작업하고, 완료 후 `main`으로 병합합니다.
@@ -192,6 +226,8 @@ git merge --no-ff feature/prompt-list-improvements -m "Merge prompt list improve
 - `git config user.email` 실행 결과
 - `git clone https://github.com/9um9n99/prompt-manager.git` 실행 결과
 - 클론 후 `ls` 또는 `tree`로 `main.py`, `README.md`, `.gitignore`가 보이는 화면
+- `docs/screenshots/repository-remote-evidence.png`: GitHub 저장소 페이지 또는 `git remote -v`, `git branch -vv` 실행 결과
+- `docs/screenshots/sample-repo-clone-and-list.png`: 공개 샘플 저장소 `octocat/Hello-World` 클론 출력과 `ls -la` 결과
 - `python3 main.py` 실행 후 메인 메뉴 화면
 - 프롬프트 추가 화면
 - 전체 목록 화면
