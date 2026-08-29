@@ -167,7 +167,8 @@ GitHub 원격 저장소 주소는 다음과 같습니다.
 제출 시에는 저장소가 실제로 GitHub에 업로드되어 있고 로컬 저장소가 원격 저장소와 연결되어 있음을 보여주는 화면을 함께 첨부합니다.
 
 - 증빙 이미지 경로: `docs/screenshots/repository-remote-evidence.png`
-- 아직 이미지 파일을 올리지 않았다면, GitHub 저장소 페이지 또는 아래 명령어 실행 결과가 보이도록 캡처한 뒤 위 경로에 저장합니다.
+- 이 이미지는 `git clone https://github.com/9um9n99/prompt-manager.git` 실행 결과, 클론 후 폴더 목록, `origin/main` 표시가 보이는 Git 로그 화면을 담고 있습니다.
+- 새로 캡처해야 한다면, GitHub 저장소 페이지 또는 아래 명령어 실행 결과가 보이도록 캡처합니다.
 
 ```bash
 git remote -v
