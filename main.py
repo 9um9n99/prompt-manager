@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+DEFAULT_CATEGORIES = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
+
 prompts = [
     {
         "title": "정하윤 - 디자인 리뷰 회의록 정리 시스템 프롬프트 (v2)",
@@ -22,32 +26,64 @@ prompts = [
     }
 ]
 
+def get_input(prompt_message):
+    value = input(prompt_message).strip()
+    while value == "":
+        print("빈 값은 입력할 수 없습니다.")
+        value = input(prompt_message).strip()
+    return value
+
+def title_exists(title):
+    for prompt in prompts:
+        if prompt["title"] == title:
+            return True
+    return False
+
+def get_all_categories():
+    categories = DEFAULT_CATEGORIES.copy()
+    for prompt in prompts:
+        if prompt["category"] not in categories:
+            categories.append(prompt["category"])
+    return categories
+
+def select_category(allow_custom):
+    categories = get_all_categories()
+
+    while True:
+        print("\n카테고리 선택:")
+        for i in range(len(categories)):
+            print(f"{i+1}) {categories[i]}")
+
+        if allow_custom:
+            print(f"{len(categories) + 1}) 직접 입력")
+
+        category_input = input("선택: ").strip()
+
+        if not category_input.isdigit():
+            print("번호를 입력해주세요.")
+            continue
+
+        category_number = int(category_input)
+
+        if 1 <= category_number <= len(categories):
+            return categories[category_number - 1]
+
+        if allow_custom and category_number == len(categories) + 1:
+            return get_input("새 카테고리: ")
+
+        print("목록에 있는 번호를 입력해주세요.")
+
 def add_prompt():
     print("\n=== 프롬프트 추가 ===")
 
-    title = input("제목: ")
-    while title == "":
-        print("제목을 입력해주세요.")
-        title = input("제목: ")
+    while True:
+        title = get_input("제목: ")
+        if not title_exists(title):
+            break
+        print("이미 등록된 제목입니다. 다른 제목을 입력해주세요.")
 
-    content = input("내용: ")
-    while content == "":
-        print("내용을 입력해주세요.")
-        content = input("내용: ")
-
-    categories = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
-
-    print("\n카테고리 선택:")
-    for i in range(len(categories)):
-        print(f"{i+1}) {categories[i]}")
-    print("직접 입력하려면 카테고리 이름을 그대로 입력하세요.")
-
-    category_input = input("선택: ")
-
-    if category_input in ["1", "2", "3", "4", "5", "6"]:
-        category = categories[int(category_input) - 1]
-    else:
-        category = category_input
+    content = get_input("내용: ")
+    category = select_category(allow_custom=True)
 
     prompts.append({
         "title": title,
@@ -72,19 +108,8 @@ def show_list():
     print(f"\n총 {len(prompts)}개의 프롬프트")
 
 def show_by_category():
-    categories = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
-
     print("\n=== 카테고리별 조회 ===")
-    for i in range(len(categories)):
-        print(f"{i+1}) {categories[i]}")
-
-    choice = input("선택: ")
-
-    if choice not in ["1", "2", "3", "4", "5", "6"]:
-        print("잘못된 입력입니다.")
-        return
-
-    selected_category = categories[int(choice) - 1]
+    selected_category = select_category(allow_custom=False)
 
     print(f"\n[{selected_category}] 카테고리 프롬프트:")
 
@@ -104,11 +129,11 @@ def show_by_category():
     print(f"\n총 {len(filtered)}개의 프롬프트")
 
 def search_prompt():
-    keyword = input("\n검색어: ")
+    keyword = get_input("\n검색어: ").lower()
 
     results = []
     for p in prompts:
-        if keyword in p["title"] or keyword in p["content"]:
+        if keyword in p["title"].lower() or keyword in p["content"].lower():
             results.append(p)
 
     print("\n검색 결과:")
