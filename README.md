@@ -10,7 +10,7 @@ GitHub 저장소: https://github.com/9um9n99/prompt-manager
 - Python 3.10 이상 권장
 - 별도 외부 패키지 설치 없음
 - macOS 터미널 또는 VSCode 터미널에서 실행 가능
-- 로컬 확인 환경: Python 3.12.14에서 실행 확인
+- 로컬 확인 환경: Python 3.12.14 (Homebrew로 설치)에서 실행 확인
 
 Git 환경 확인 명령어:
 
@@ -164,11 +164,7 @@ GitHub 원격 저장소 주소는 다음과 같습니다.
 
 - https://github.com/9um9n99/prompt-manager
 
-제출 시에는 저장소가 실제로 GitHub에 업로드되어 있고 로컬 저장소가 원격 저장소와 연결되어 있음을 보여주는 화면을 함께 첨부합니다.
-
-- 증빙 이미지 경로: `docs/screenshots/repository-remote-evidence.png`
-- 이 이미지는 `git clone https://github.com/9um9n99/prompt-manager.git` 실행 결과, 클론 후 폴더 목록, `origin/main` 표시가 보이는 Git 로그 화면을 담고 있습니다.
-- 새로 캡처해야 한다면, GitHub 저장소 페이지 또는 아래 명령어 실행 결과가 보이도록 캡처합니다.
+로컬 저장소가 원격 저장소와 연결되어 있음을 보여주는 캡처는 저장소 안 `screenshots/repository-remote-evidence.png`에서 확인할 수 있습니다. 이 이미지는 `git remote -v`, `git branch -vv` 실행 결과와 GitHub 저장소 페이지 화면을 담고 있습니다.
 
 ```bash
 git remote -v
@@ -177,11 +173,10 @@ git branch -vv
 
 ## 공개 샘플 저장소 클론 증빙
 
-이 항목은 위의 사용자 본인 저장소 클론과 별개입니다. 공개 샘플 저장소를 직접 클론하고, 클론 출력과 폴더 목록을 함께 캡처해 제출합니다.
+이 항목은 위의 사용자 본인 저장소 클론과 별개입니다. 공개 샘플 저장소를 직접 클론하고 구조를 확인한 기록입니다.
 
-- 사용할 공개 샘플 저장소: https://github.com/octocat/Hello-World
-- 증빙 이미지 경로: `docs/screenshots/sample-repo-clone-and-list.png`
-- 아직 이미지 파일을 올리지 않았다면, 아래 명령어의 `git clone` 출력과 `ls -la` 결과가 한 화면에 보이도록 캡처한 뒤 위 경로에 저장합니다.
+- 사용한 공개 샘플 저장소: https://github.com/octocat/Hello-World
+- 클론 출력과 `ls -la` 결과는 저장소 안 `screenshots/sample-repo-clone-and-list.png`에서 확인할 수 있습니다.
 
 ```bash
 mkdir -p ~/Desktop/codyssey-sample-clone-check
@@ -227,8 +222,8 @@ git merge --no-ff feature/prompt-list-improvements -m "Merge prompt list improve
 - `git config user.email` 실행 결과
 - `git clone https://github.com/9um9n99/prompt-manager.git` 실행 결과
 - 클론 후 `ls` 또는 `tree`로 `main.py`, `README.md`, `.gitignore`가 보이는 화면
-- `docs/screenshots/repository-remote-evidence.png`: GitHub 저장소 페이지 또는 `git remote -v`, `git branch -vv` 실행 결과
-- `docs/screenshots/sample-repo-clone-and-list.png`: 공개 샘플 저장소 `octocat/Hello-World` 클론 출력과 `ls -la` 결과
+- `screenshots/repository-remote-evidence.png`: GitHub 저장소 페이지 또는 `git remote -v`, `git branch -vv` 실행 결과
+- `screenshots/sample-repo-clone-and-list.png`: 공개 샘플 저장소 `octocat/Hello-World` 클론 출력과 `ls -la` 결과
 - `python3 main.py` 실행 후 메인 메뉴 화면
 - 프롬프트 추가 화면
 - 전체 목록 화면
