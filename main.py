@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+# 카테고리 목록을 상수로 한 곳에만 정의한다 (평가 #23 대응: 여러 함수에 중복 정의되어 있던 문제)
 DEFAULT_CATEGORIES = ["텍스트 생성", "이미지 생성", "영상 생성", "페르소나", "자동화", "기타"]
 
 prompts = [
@@ -26,27 +27,35 @@ prompts = [
     }
 ]
 
+
 def get_input(prompt_message):
+    """빈 값이 입력되지 않을 때까지 반복해서 입력을 받는다. (평가 #14 대응: 입력 검증 공통화)"""
     value = input(prompt_message).strip()
     while value == "":
         print("빈 값은 입력할 수 없습니다.")
         value = input(prompt_message).strip()
     return value
 
+
 def title_exists(title):
+    """이미 등록된 제목인지 확인한다. (평가 #21 대응: 중복 제목 처리)"""
     for prompt in prompts:
         if prompt["title"] == title:
             return True
     return False
 
+
 def get_all_categories():
+    """기본 카테고리(DEFAULT_CATEGORIES)와 사용자가 직접 만든 카테고리를 합쳐 반환한다."""
     categories = DEFAULT_CATEGORIES.copy()
     for prompt in prompts:
         if prompt["category"] not in categories:
             categories.append(prompt["category"])
     return categories
 
+
 def select_category(allow_custom):
+    """카테고리 번호 선택과 직접 입력을 처리한다. allow_custom이 False면 조회용으로 기존 카테고리만 선택 가능하다."""
     categories = get_all_categories()
 
     while True:
@@ -73,6 +82,7 @@ def select_category(allow_custom):
 
         print("목록에 있는 번호를 입력해주세요.")
 
+
 def add_prompt():
     print("\n=== 프롬프트 추가 ===")
 
@@ -95,6 +105,7 @@ def add_prompt():
 
     print(f"\n'{title}' 프롬프트가 추가되었습니다!")
 
+
 def show_list():
     print("\n=== 프롬프트 목록 ===")
     if len(prompts) == 0:
@@ -106,6 +117,7 @@ def show_list():
         print(f"{i+1}. [{prompts[i]['category']}] {prompts[i]['title']}{star}")
 
     print(f"\n총 {len(prompts)}개의 프롬프트")
+
 
 def show_by_category():
     print("\n=== 카테고리별 조회 ===")
@@ -128,7 +140,9 @@ def show_by_category():
 
     print(f"\n총 {len(filtered)}개의 프롬프트")
 
+
 def search_prompt():
+    """제목과 내용을 대소문자 구분 없이 검색한다. (평가 #8 개선 반영)"""
     keyword = get_input("\n검색어: ").lower()
 
     results = []
@@ -147,6 +161,7 @@ def search_prompt():
         print(f"{i+1}. [{results[i]['category']}] {results[i]['title']}{star}")
 
     print(f"\n{len(results)}개의 프롬프트를 찾았습니다.")
+
 
 def show_detail():
     show_list()
@@ -175,6 +190,7 @@ def show_detail():
     print("내용:")
     print(p["content"])
     print("─" * 30)
+
 
 def toggle_favorite():
     show_list()
@@ -218,6 +234,7 @@ def show_favorites():
 
     print(f"\n총 {len(favorites)}개의 즐겨찾기")
 
+
 def show_top_viewed():
     sorted_prompts = sorted(prompts, key=lambda p: p["view_count"], reverse=True)
 
@@ -225,6 +242,7 @@ def show_top_viewed():
     for i in range(len(sorted_prompts)):
         p = sorted_prompts[i]
         print(f"{i+1}. [{p['category']}] {p['title']} - 조회수: {p['view_count']}")
+
 
 def show_menu():
     print("\n=== 나만의 프롬프트 관리 ===")
@@ -237,6 +255,7 @@ def show_menu():
     print("7. 즐겨찾기 목록")
     print("8. 조회수 Top 목록")
     print("0. 종료")
+
 
 def main():
     while True:
@@ -264,5 +283,6 @@ def main():
             break
         else:
             print("잘못된 입력입니다. 다시 선택해주세요.")
+
 
 main()
